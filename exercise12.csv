@@ -1,5 +1,5 @@
 ﻿type,color,x1,y1,x2,y2,width,height,cx,cy,r,rx,ry
-circle,blue,,,,,,,250,50,50,,
+circle,blue,,,,,,,200,150,50,,
 rectangle,pink,0,0,,,200,100,,,,,
 ellipse,red,,,,,,,250,50,,150,50
 line,green,200,100,150,50,,,,,,,
