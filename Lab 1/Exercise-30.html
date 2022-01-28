@@ -1,0 +1,56 @@
+<!-- Source: F21DV
+     Author: Melanie Lucas
+     Date: 23/01/2022 -->
+
+<body></body>
+
+<script type="text/javascript" src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+  var data = [3, 4, 8, 12, 1, 7, 20, 10, 5, 15];
+  const xSize = 400;
+  const ySize = 400;
+  const margin = 40;
+  const xMax = xSize - margin * 2;
+  const yMax = ySize - margin * 2;
+  // Append SVG Object to the Page
+  const svg = d3
+    .select("body")
+    .append("svg")
+    .attr("width", xSize)
+    .attr("height", ySize)
+    .append("g")
+    .attr("transform", "translate(" + xSize / 2 + "," + ySize / 2 + ")");
+  const radius = Math.min(xSize, ySize) / 2;
+  var color = d3.scaleOrdinal([
+    "#4daf4a",
+    "#377eb8",
+    "#ff7f00",
+    "#984ea3",
+    "#e41a1c",
+  ]);
+  // Generate the pie
+  var pie = d3.pie();
+  // Generate the arcs
+  var arc = d3
+    .arc()
+    // give path to pie wedges
+    // inner must be 0 to create a pie chart otherwise it will be a donut chart
+    .innerRadius(0)
+    .outerRadius(radius);
+  //Generate groups
+  // group elements hold individual paths or wedges
+  var arcs = svg
+    .selectAll("arc")
+    .data(pie(data))
+    .enter()
+    .append("g")
+    .attr("class", "arc");
+  //Draw arc paths
+  // add a path element for each wedge
+  arcs
+    .append("path")
+    .attr("fill", function (d, i) {
+      return color(i);
+    })
+    .attr("d", arc);
+</script>

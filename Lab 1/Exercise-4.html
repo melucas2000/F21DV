@@ -1,0 +1,30 @@
+<!-- Source: F21DV
+     Author: Melanie Lucas
+     Date: 18/01/2022 -->
+
+<body></body>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<span class="test">Test</span>
+<script>
+  // for loop that starts at 1 and sets the contents of the element to count
+  for (let i = 1; i < 11; i++) {
+    // DOM element created and appended to the end of the body
+    let newspan = d3.select("body").append("span");
+    // set font size
+    newspan.text(i).style("font-size", "50px");
+
+    // conditional statemnt if element is < 6 then colour is blue
+    if (i < 6) {
+      newspan.style("color", "blue");
+    } else {
+      // otherwise the colour is green
+      newspan.style("color", "green");
+    }
+  }
+  // select first element and modify properties
+  d3.select(".test")
+    .style("color", "purple")
+    .style("font-size", "30px")
+    .text("Start");
+</script>

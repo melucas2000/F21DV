@@ -1,0 +1,51 @@
+<!-- Source: F21DV
+     Author: Melanie Lucas
+     Date: 18/01/2022 -->
+
+<body></body>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+  let titaniccsv =
+    "https://raw.githubusercontent.com/dsindy/kaggle-titanic/master/data/test.csv";
+  /*
+     PassengerId,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
+     892,3,"Kelly, Mr. James",male,34.5,0,0,330911,7.8292,,Q
+     893,3,"Wilkes, Mrs. James (Ellen Needs)",female,47,1,0,363272,7,,S
+     894,2,"Myles, Mr. Thomas Francis",male,62,0,0,240276,9.6875,,Q
+     895,3,"Wirz, Mr. Albert",male,27,0,0,315154,8.6625,,S
+     */
+
+  // reads in csv
+  d3.csv(titaniccsv, function (row) {
+    return row;
+    // waits until function above is finished
+  }).then(function (data) {
+    // filters through data and returns number of males
+    const filteredMale = data.filter(function (row) {
+      return row.Sex == "male";
+    });
+    // returns number of females
+    const filteredFemale = data.filter(function (row) {
+      return row.Sex == "female";
+    });
+    // returns number of rows that include MR
+    const filteredMr = data.filter(function (row) {
+      return row.Name.includes("Mr.");
+    });
+    // returns number of rows that include Mrs
+    const filteredMrs = data.filter(function (row) {
+      return row.Name.includes("Mrs.");
+    });
+    // returns number of rows that dont include Mrs or Mr
+    const filteredOther = data.filter(function (row) {
+      return row.Name.indexOf("Mrs.") === -1 && row.Name.indexOf("Mr.") === -1;
+    });
+    // .length is used to print out the number of returned values
+    console.log("NumMale", filteredMale.length);
+    console.log("NumFemale", filteredMale.length);
+    console.log("NumMr", filteredMr.length);
+    console.log("NumMrs", filteredMr.length);
+    console.log("NumOther", filteredOther.length);
+  });
+</script>

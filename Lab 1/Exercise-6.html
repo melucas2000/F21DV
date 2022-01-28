@@ -1,0 +1,27 @@
+<!-- Source: F21DV
+     Author: Melanie Lucas
+     Date: 18/01/2022 -->
+
+</script> -->
+
+<script src='https://d3js.org/d3.v7.min.js'></script>
+<div></div>
+<div></div>
+<div></div>
+<script>
+	let otherdata = [ {name:'test', val:1, color: 'red'},
+{name:'other', val:2, color: 'blue'},
+{name:'b', val:3, color: 'green'} ];
+let paragraph = d3.select("body") // select the body
+.selectAll("div") // select all div elements
+.data(otherdata) // array provided to data function
+// print text 
+.text(function (d, i){
+console.log("d.name: " + d.name);
+console.log("d.val: " + d.val);
+console.log("d.color: " + d.color);
+console.log("i: " + i);
+console.log("this: " + this);
+return 'cont:' + d.name + ' color:' + d.color; // return value is used to set the 'text'
+});
+</script>

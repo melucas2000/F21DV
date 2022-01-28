@@ -1,0 +1,106 @@
+<!-- Source: F21DV
+     Author: Melanie Lucas
+     Date: 23/01/2022 -->
+
+<body></body>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+  const width = 600;
+  const barHeight = 20;
+  // where axis location starts
+  const startX = 50;
+  const margin = 1;
+  const data = [50, 400, 300, 900, 250, 1000];
+  const height = (barHeight + margin) * data.length;
+
+  // append the svg object to the body of the page
+  var svg = d3
+    .select("body")
+    .append("svg")
+    .attr("width", width)
+    .attr("height", barHeight * data.length + 50);
+
+  // append image to svg
+  var svgImage = d3
+    .select("svg")
+    .append("svg:image")
+    .attr(
+      "xlink:href",
+      "https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?"
+    )
+    // image size fitted to bounds of svg
+    .attr("width", "100%")
+    .attr("height", "100%")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("preserveAspectRatio", "none")
+    .attr("opacity", "0.5");
+
+  var g = svg
+    .selectAll("g")
+    .data(data)
+    .enter()
+    .append("g")
+    .attr("transform", function (d, i) {
+      return `translate(${startX + 5}, ${i * barHeight + 4})`;
+    });
+
+  // set scale
+  var scale = d3
+    .scaleLinear()
+    .domain([d3.min(data), d3.max(data)])
+    .range([50, 500]); // range is 50 - 500, max (1000) will me mapped to 500
+
+  // define sequential colour scale
+  var seqColor = d3
+    .scaleSequential()
+    .domain([d3.min(data), d3.max(data)])
+    .interpolator(d3.interpolatePuRd);
+  // append rectangle with width set by scale
+  g.append("rect")
+    .attr("width", function (d) {
+      return scale(d);
+    })
+    // set colour using sequential colour scale
+    .attr("fill", seqColor)
+    .attr("height", barHeight - margin);
+
+  // set x axis scale 0 - max data value
+  var xscale = d3
+    .scaleLinear()
+    .domain([0, d3.max(data)])
+    .range([0, 500]);
+
+  // set y axis scale
+  var yscale = d3
+    // scale band used to define data groups
+    .scaleBand()
+    // maped over array producing array of index's
+    .domain(data.map((d, i) => i))
+    .range([0, height - 6]);
+
+  var x_axis = d3.axisBottom().scale(xscale);
+
+  var y_axis = d3.axisLeft().scale(yscale);
+
+  // append both axis'
+  svg.append("g").attr("transform", `translate(${startX}, 5)`).call(y_axis);
+
+  svg
+    .append("g")
+    .attr("transform", `translate(${startX + 5}, ${height})`)
+    .call(x_axis);
+
+  // append text
+  g.append("text")
+    .attr("x", function (d) {
+      return scale(d);
+    })
+    .attr("y", barHeight / 2)
+    .attr("dy", ".35em")
+    .style("text-anchor", "end")
+    .text(function (d) {
+      return d;
+    });
+</script>

@@ -1,0 +1,30 @@
+<!-- Source: F21DV
+     Author: Melanie Lucas
+     Date: 18/01/2022 -->
+
+<body></body>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<script>
+  let num = [10, 50, 100, 200];
+  let paragraph = d3
+    .select("body")
+    .selectAll("div")
+    .data(num) // array provided to data function
+    .text(function (d, i) {
+      return "cont:" + d; // return value is used to set the 'text'
+    })
+    .style("color", function (d, i) {
+      // text is red between 50 and 100
+      if (d <= 100 && d >= 50) {
+        return "red";
+      } else {
+        return "yellow";
+      }
+      return "blue";
+    });
+</script>

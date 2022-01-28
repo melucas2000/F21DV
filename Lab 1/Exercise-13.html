@@ -1,0 +1,87 @@
+<!-- Source: F21DV
+     Author: Melanie Lucas
+     Date: 18/01/2022 -->
+
+<body></body>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+  let shapecsv =
+    "https://raw.githubusercontent.com/melucas2000/F21DV/main/exercise12.csv";
+
+  //Create SVG element
+  var svg = d3
+    .select("body")
+    .append("svg")
+    .attr("width", 400)
+    .attr("height", 400)
+    .style("border", "1px solid green");
+  // reads in csv
+  d3.csv(shapecsv, function (row) {
+    return row;
+    // function waits to be called until function above is read in
+  }).then(function (data) {
+    // function to load values for each shape, create shape and append
+    data.forEach(function (shape) {
+      // append rectangle
+      if (shape.type == "rectangle") {
+        svg
+          .append("rect")
+          .attr("x", shape.x1)
+          .attr("y", shape.y1)
+          .attr("width", shape.width)
+          .attr("height", shape.height)
+          .attr("fill", shape.color);
+        // append circle
+      } else if (shape.type == "circle") {
+        svg
+          .append("circle")
+          .attr("cx", shape.cx)
+          .attr("cy", shape.cy)
+          .attr("r", shape.r)
+          .attr("fill", shape.color);
+        // append ellipse
+      } else if (shape.type == "ellipse") {
+        svg
+          .append("ellipse")
+          .attr("cx", shape.cx)
+          .attr("cy", shape.cy)
+          .attr("rx", shape.rx)
+          .attr("ry", shape.ry)
+          .attr("fill", shape.color);
+        // append line
+      } else if (shape.type == "line") {
+        svg
+          .append("line")
+          .attr("x1", shape.x1)
+          .attr("x2", shape.x2)
+          .attr("y1", shape.y1)
+          .attr("y2", shape.y2)
+          .attr("stroke", shape.color);
+      }
+      //Create and append text element into group
+      svg
+        .append("text")
+        .attr("x", 150)
+        .attr("y", 50)
+        .attr("stroke", "#fff")
+        .text("This is some text!");
+    });
+    var p = d3
+      .select("body")
+      .selectAll("svg") // select all svg elements
+      .data(shapecsv) // pass processed data
+      // svg elements are updated, created or removed based on csv data
+      .join(
+        function (enter) {
+          console.log("enter called");
+        },
+        function (update) {
+          console.log("update called");
+        },
+        function (exit) {
+          console.log("exit called");
+        }
+      );
+  });
+</script>

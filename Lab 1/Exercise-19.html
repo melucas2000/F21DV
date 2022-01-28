@@ -1,0 +1,73 @@
+<!-- Source: F21DV
+     Author: Melanie Lucas
+     Date: 23/01/2022 -->
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+  //const data = [50, 400, 300, 900, 250, 1000];
+  const width = 500;
+  const barHeight = 20;
+  const margin = 1;
+
+  let data1 =
+    "https://raw.githubusercontent.com/melucas2000/F21DV/main/exercise_18.csv";
+  let data2 =
+    "https://raw.githubusercontent.com/melucas2000/F21DV/main/exercise19.csv";
+
+  // function to display bar chart
+  function barChart(csv) {
+    d3.csv(csv, function (row) {
+      // parse in data as integer and read values from csv
+      return parseInt(row.values);
+      // function waits to be called until function above handling csv is read in
+    }).then(function (data) {
+      var scale = d3
+        .scaleLinear()
+        .domain([d3.min(data), d3.max(data)])
+        .range([50, 500]); // range is 50 - 500, max (1000) will me mapped to 500
+
+      var svg = d3
+        .select("body")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", barHeight * data.length);
+      var g = svg
+        .selectAll("g")
+        .data(data)
+        .enter()
+        .append("g")
+        .attr("transform", function (d, i) {
+          return "translate(0," + i * barHeight + ")";
+        });
+      // append rectangle with width set by scale
+      g.append("rect")
+        .attr("width", function (d) {
+          return scale(d);
+        })
+        // set colour using if statement
+        .attr("fill", function (d, i) {
+          if (d <= 50) {
+            return "green";
+          } else if (d > 500) {
+            return "red";
+          } else {
+            return "blue";
+          }
+        })
+        .attr("height", barHeight - margin);
+      g.append("text")
+        .attr("x", function (d) {
+          return scale(d);
+        })
+        .attr("y", barHeight / 2)
+        .attr("dy", ".35em")
+        .style("text-anchor", "end")
+        .text(function (d) {
+          return d;
+        });
+    });
+  }
+  // bar chart function called with both data csv's
+  barChart(data1);
+  barChart(data2);
+</script>

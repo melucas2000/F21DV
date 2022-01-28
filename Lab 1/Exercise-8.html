@@ -1,0 +1,22 @@
+<!-- Source: F21DV
+     Author: Melanie Lucas
+     Date: 18/01/2022 -->
+
+<body></body>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+  var myData = ["a", 4, 1, "b", 6, 2, 8, 9, "z"];
+  var p = d3
+    .select("body") // selects HTML body
+    .selectAll("span") // select span elements
+    .data(myData) // array provided to data function
+    .enter() // check for span elements
+    .append("span") // append above to body element
+    // function to add values from data array print to text
+    .text(function (d, i) {
+      return d;
+    })
+    // if character is integer the colour is green else its blue
+    .style("color", (d, i) => (Number.isInteger(d) ? "green" : "blue"));
+</script>
