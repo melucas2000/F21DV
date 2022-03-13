@@ -1,4 +1,4 @@
-name,latitude,longitude,gdp_per_capita
+location,latitude,longitude,gdp_per_capita
 United Kingdom,55.378052,-3.435973,39753.244
 Mexico,23.634501,-102.552788,17336.469
 Turkey,38.963745,35.24332,25129.341
